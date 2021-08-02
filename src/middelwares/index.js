@@ -1,3 +1,14 @@
 const URL="http://localhost:8080/api/";
 
-export {URL};
+
+const token= 'Bearer '+localStorage.getItem("access_token")
+
+const headers ={
+    headers:{
+        Authorization: token
+    }
+}
+export {
+    URL,
+    headers
+};

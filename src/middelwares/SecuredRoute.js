@@ -7,7 +7,7 @@ const SecuredRoute = ({ component: Component, ...otherProps }) => {
   <Route
     {...otherProps}
     render={props =>
-        token ? (
+        token!==null ? (
         <Component {...props} />
       ) : (
         <Redirect to="/signin" />
