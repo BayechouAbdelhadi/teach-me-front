@@ -7,24 +7,9 @@ import TextField from '@material-ui/core/TextField'
 import Button from '@material-ui/core/Button'
 import TextareaAutosize from '@material-ui/core/TextareaAutosize';
 import Icon from "@material-ui/core/Icon";
-import  {useSelector} from "react-redux"
-import axios from "axios";
-import {URL,headers} from "../../../middelwares";
 
 
-function formatDate(date) {
-  var d = new Date(date),
-      month = '' + (d.getMonth() + 1),
-      day = '' + d.getDate(),
-      year = d.getFullYear();
 
-  if (month.length < 2) 
-      month = '0' + month;
-  if (day.length < 2) 
-      day = '0' + day;
-
-  return [year, month, day].join('-');
-}
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
@@ -70,30 +55,9 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
  
-export default function AutoGrid() {
+export default function AutoGrid({post,setPost}) {
   const classes = useStyles();
-  const userId=useSelector(state=>state.user.user.id);
-  const initialPost={
-    description:"",
-    subject:"",
-    duration:"",
-    start_date: formatDate(Date.now()),
-    price:"",
-    userId:userId,
- }
-
-  const [post,setPost]=useState(initialPost)
-  const createPost=async()=>{
-     await axios.post(`${URL}posts/create-post`,post,headers)
-      .then((res)=>{
-        setPost(initialPost)
-      })
-      .catch((error)=>{console.error(error)})
-  }
-  const submit=(e)=>{
-      e.preventDefault();
-      createPost();
-  }
+  
   const onInputChange=(e)=>{
       setPost({...post,[e.target.name]:e.target.value});
   }
@@ -101,7 +65,7 @@ export default function AutoGrid() {
   return (
     <div className={classes.root}>
         <div className={classes.postHeader}><h3>Publier un offre</h3></div>
-      <form onSubmit={submit}>
+      <form >
         <Grid container spacing={3}>
             <Grid item xs>
                 <TextField
@@ -157,18 +121,6 @@ export default function AutoGrid() {
                         value={post.description}
                         className={classes.textAria}
                     />
-            </Grid>
-        </Grid>
-        <Grid container  spacing={3}>
-            <Grid item  xs style={{textAlign:"center"}}>
-                    <Button 
-                        className={classes.publishButton}
-                        variant="contained"
-                        color="primary"
-                        type="submit"     
-                    >
-                        Publier
-                    </Button>
             </Grid>
         </Grid>
       </form>

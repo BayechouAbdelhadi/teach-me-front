@@ -18,6 +18,9 @@ import MoreIcon from '@material-ui/icons/MoreVert';
 import {Link} from "react-router-dom";
 import {useSelector,useDispatch} from "react-redux";
 import {setValidToken} from "../../redux/redux-slices/userSlice";
+import Filter from "./Filter"
+import {setSubject} from "../../redux/redux-slices/filterSlice";
+
 
 const useStyles = makeStyles((theme) => ({
   grow: {
@@ -46,6 +49,7 @@ const useStyles = makeStyles((theme) => ({
       marginLeft: theme.spacing(3),
       width: 'auto',
     },
+    paddingRight:theme.spacing( 2)
   },
   searchIcon: {
     padding: theme.spacing(0, 2),
@@ -117,13 +121,15 @@ export default function PrimarySearchAppBar() {
   };
 
   const handleMenuClose = (route) => {
-    setAnchorEl(null);
-    handleMobileMenuClose();
-    if(route.name==='deconexion')
+    if(route.name==='deconnexion')
       {
+      console.log(`shoud disconnect`)
       localStorage.removeItem("access_token");
       dispatch(setValidToken(false));
     }
+    setAnchorEl(null);
+    handleMobileMenuClose();
+    
   };
 
   const handleMobileMenuOpen = (event) => {
@@ -140,6 +146,7 @@ export default function PrimarySearchAppBar() {
     {id:1, name: 'connexion', route:'/signin'},
     {id:2, name: "S'enregistrer",route:'/signup'}
   ]
+  
   const renderMenu = (
     <Menu
       anchorEl={anchorEl}
@@ -152,7 +159,7 @@ export default function PrimarySearchAppBar() {
     >
       {
       isUserLoggedIn?
-          authenticatedUserRoutes.map(route=><MenuItem key={route.id} onClick={()=>handleMenuClose(route)}><Link to={route.route} className={classes.links}>{route.name}</Link></MenuItem>)
+          authenticatedUserRoutes.map(route=><MenuItem  key={route.id} >< Link to={route.route} onClick={()=>handleMenuClose(route)} className={classes.links}>{route.name}</Link></MenuItem>)
         :
         nonAuthenticatedUserRoutes.map(route=><MenuItem key={route.id} onClick={handleMenuClose}><Link to={route.route} className={classes.links}>{route.name}</Link></MenuItem>)
       }
@@ -170,9 +177,9 @@ export default function PrimarySearchAppBar() {
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
     >
-      <MenuItem>
+     { isUserLoggedIn&&<MenuItem>
         <IconButton aria-label="show 4 new mails" color="inherit">
-          <Link to='/messenger' className={classes.iconLinks}>
+          <Link to='/messenger' className={classes.links}>
             <Badge badgeContent={4} color="secondary">
               <MailIcon />
             </Badge>
@@ -180,7 +187,8 @@ export default function PrimarySearchAppBar() {
         </IconButton>
         <p>Messages</p>
       </MenuItem>
-      <MenuItem>
+    }
+      {isUserLoggedIn && <MenuItem>
         <IconButton aria-label="show 11 new notifications" color="inherit">
           <Badge badgeContent={11} color="secondary">
             <NotificationsIcon />
@@ -188,6 +196,7 @@ export default function PrimarySearchAppBar() {
         </IconButton>
         <p>Notifications</p>
       </MenuItem>
+      }
       <MenuItem onClick={handleProfileMenuOpen}>
         <IconButton
           aria-label="account of current user"
@@ -219,44 +228,58 @@ export default function PrimarySearchAppBar() {
           </Typography>
           </IconButton>
           </Link>
-          
-          <div className={classes.search}>
-            <div className={classes.searchIcon}>
-              <SearchIcon />
-            </div>
-            <InputBase
-              placeholder="Search…"
-              classes={{
-                root: classes.inputRoot,
-                input: classes.inputInput,
-              }}
-              inputProps={{ 'aria-label': 'search' }}
-            />
-          </div>
+          {isUserLoggedIn &&
+            <>
+              <div className={classes.search}>
+                <div className={classes.searchIcon}>
+                  <SearchIcon  />
+                </div>
+                <InputBase
+                  onChange={(e)=>{dispatch(setSubject(e.target.value))}}
+                  placeholder="Search…"
+                  classes={{
+                    root: classes.inputRoot,
+                    input: classes.inputInput,
+                  }}
+                  inputProps={{ 'aria-label': 'search' }}
+                />
+                  
+                
+                {/* <i class="fa fa-filter"></i> */}
+              </div>
+              <Filter/>
+           </>
+          }
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
-            <IconButton aria-label="show 4 new mails" color="inherit">
-            <Link to='/messenger' className={classes.iconLinks}>
-              <Badge badgeContent={4} color="secondary">
-                <MailIcon  />
-              </Badge>
-            </Link>
-            </IconButton>
-            <IconButton aria-label="show 17 new notifications" color="inherit">
-              <Badge badgeContent={17} color="secondary">
-                <NotificationsIcon  />
-              </Badge>
-            </IconButton>
+            {isUserLoggedIn &&
+              <>
+                <IconButton aria-label="show 4 new mails" color="inherit">
+                <Link to='/messenger' className={classes.iconLinks}>
+                  <Badge badgeContent={4} color="secondary">
+                    <MailIcon  />
+                  </Badge>
+                </Link>
+                </IconButton>
+                <IconButton aria-label="show 17 new notifications" color="inherit">
+                  <Badge badgeContent={17} color="secondary">
+                    <NotificationsIcon  />
+                  </Badge>
+                </IconButton>
+                
+            </>
+            }
             <IconButton
-              edge="end"
-              aria-label="account of current user"
-              aria-controls={menuId}
-              aria-haspopup="true"
-              onClick={handleProfileMenuOpen}
-              color="inherit"
-            >
-              {isUserLoggedIn?<Avatar className={classes.avatar} src="https://bit.ly/3j0IUk8" />:<AccountCircle />}
-            </IconButton>
+            edge="end"
+            aria-label="account of current user"
+            aria-controls={menuId}
+            aria-haspopup="true"
+            onClick={handleProfileMenuOpen}
+            color="inherit"
+          >
+      
+            {isUserLoggedIn?<Avatar className={classes.avatar} src="https://bit.ly/3j0IUk8" />:<AccountCircle />}
+          </IconButton>
           </div>
           <div className={classes.sectionMobile}>
             <IconButton

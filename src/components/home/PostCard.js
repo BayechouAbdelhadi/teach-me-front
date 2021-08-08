@@ -51,6 +51,7 @@ const useStyles = makeStyles((theme) => ({
   paper: {
     padding: theme.spacing(2),
     textAlign: 'center',
+    minWidth:"20vw",
     color: theme.palette.text.secondary,
     border:"1px solid #898c8e",
     backgroundColor:"#3a3b3c",
@@ -126,10 +127,10 @@ export default function RecipeReviewCard({post}) {
             <MoreVertIcon />
           </IconButton>
         }
-        title= {poster?poster.username:""}
+        title= {poster?poster.prenom+" "+poster.nom:""}
         subheader={
             <Typography variant="body2" color="textSecondary" component="p" className={classes.subHeader}>
-                        September 14, 2016
+                        {post.start_date}
             </Typography>
         }
       />

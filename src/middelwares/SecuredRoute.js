@@ -1,13 +1,14 @@
 import React from "react";
 import { Route, Redirect } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const SecuredRoute = ({ component: Component, ...otherProps }) => {
-  const token = localStorage.getItem('access_token');
+  const validToken=useSelector(state=>state.user.validToken)
   return(
   <Route
     {...otherProps}
     render={props =>
-        token!==null ? (
+      validToken ? (
         <Component {...props} />
       ) : (
         <Redirect to="/signin" />

@@ -15,7 +15,7 @@ import  {setUser,setValidToken} from "../../redux/redux-slices/userSlice";
 
 const useStyles = makeStyles((theme) => ({
     paper: {
-      marginTop: theme.spacing(5),
+      paddingTop: theme.spacing(5),
       display: 'flex',
       flexDirection: 'column',
       alignItems: 'center',
@@ -31,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
       margin: theme.spacing(1),
       width: theme.spacing(7),
       height: theme.spacing(7),
-      boxShadow:"inset 0 -3em 3em Tomato, 0 0  0 2px rgb(255,255,255), 0.3em 0.3em 1em Tomato"
+      boxShadow:"inset 0 -3em 3em #1877f2, 0 0  0 2px rgb(255,255,255), 0.3em 0.3em 1em #1877f2"
     },
     form: {
       width:'100%', // Fix IE 11 issue.
@@ -41,7 +41,7 @@ const useStyles = makeStyles((theme) => ({
     },
     submit: {
       margin: theme.spacing(3, 0, 2),
-      backgroundColor:'tomato' ,
+      backgroundColor:'#1877f2' ,
     },
     disable: {
       backgroundColor:"#04295D",
@@ -68,7 +68,8 @@ const useStyles = makeStyles((theme) => ({
         backgroundColor: "#00FF00",
       },
     main:{
-      height : 800 ,
+      height :"86vh" ,
+      paddingTop:20,
     },
 
   }));
