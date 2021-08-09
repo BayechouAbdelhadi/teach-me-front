@@ -5,24 +5,43 @@ import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-import PostForm from"./PostForm";
-import ChooseLocation from "./ChooseLocation"
+import PostForm from"../../components/post/PostForm";
+import ChooseLocation from "../../components/post/ChooseLocation"
 import  {useSelector} from "react-redux"
 import axios from "axios";
-import {URL,headers} from "../../../middelwares";
+import {URL,headers} from "../../middelwares";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    width: '50%',
+    width: '90%',
+    height:"86vh",
     margin:"0 auto"
   },
   button: {
     marginRight: theme.spacing(1),
+    border:"1px solid #a4a9ad",
   },
   instructions: {
     marginTop: theme.spacing(1),
     marginBottom: theme.spacing(1),
   },
+  buttonContainer:{
+    margin:"0 auto",
+      width:'50%',
+      display:"flex",
+      justifyContent:"space-between",
+      overflow: "wrap"
+  },
+  instructionsContainer:{
+      margin:"0 auto",
+      width:'50%',
+      display:"flex",
+      justifyContent:"space-between",
+      overflow: "wrap"
+  },
+  disabledButton:{
+    border:"1px solid #a4a9ad",
+  }
 }));
 
 function formatDate(date) {
@@ -50,6 +69,7 @@ export default function MakePost() {
   const [activeStep, setActiveStep] = React.useState(0);
   const steps = getSteps();
   const user = useSelector(state=>state.user.user);
+
   const initialPost={
         description:"",
         subject:"",
@@ -74,6 +94,7 @@ export default function MakePost() {
 
   const createPost=async()=>{
       const postData={...post,location:JSON.stringify(post.location)}
+      console.log(`(object)`, (postData),'headeers',headers)
      await axios.post(`${URL}posts/create-post`,postData,headers)
       .then((res)=>{
         setPost(initialPost)
@@ -105,19 +126,19 @@ export default function MakePost() {
       </Stepper>
       <div>
         {activeStep === steps.length ? (
-          <div>
+          <div className={classes.instructionsContainer}>
             <Typography className={classes.instructions}>
-              All steps completed - you&apos;re finished
+               Votre poste a bien été soumis 
             </Typography>
             <Button onClick={handleReset} className={classes.button}>
-              Reset
+              Reinitialiser
             </Button>
           </div>
         ) : (
           <div>
-            <Typography className={classes.instructions}>{getStepContent(activeStep)}</Typography>
-            <div>
-              <Button disabled={activeStep === 0} onClick={handleBack} className={classes.button}>
+            <div className={classes.instructions}>{getStepContent(activeStep)}</div>
+            <div  className={classes.buttonContainer}>
+              <Button disabled={activeStep === 0} onClick={handleBack} className={activeStep === 0?classes.disabledButton:classes.button}>
                 Back
               </Button>
               <Button

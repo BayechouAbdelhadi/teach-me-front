@@ -5,7 +5,10 @@ import { createSlice } from "@reduxjs/toolkit";
 // }
 export const filterSlice = createSlice({
   name: "filter",
-  initialState: {},
+  initialState: {
+    radius:30,
+    maxPrice:150
+  },
   reducers: {
     setMaxPrice: (state, action) => {
       state.maxPrice=action.payload;
@@ -13,13 +16,17 @@ export const filterSlice = createSlice({
     setSubject:(state, action) => {
       state.subject=action.payload;
     },
+    setRadius:(state, action) => {
+      state.radius=action.payload;
+    },
   },
 });
 
 //+ generated action creator functions :return an object with payload and type
 export const { 
   setMaxPrice,
-  setSubject
+  setSubject,
+  setRadius
 } = filterSlice.actions;
 
 

@@ -1,4 +1,4 @@
-import React,{useState,useEffect} from 'react';
+import React,{useState} from 'react';
 import { alpha, makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -8,19 +8,17 @@ import InputBase from '@material-ui/core/InputBase';
 import Badge from '@material-ui/core/Badge';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
-import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import Avatar from '@material-ui/core/Avatar';
 import MailIcon from '@material-ui/icons/Mail';
-import NotificationsIcon from '@material-ui/icons/Notifications';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import {Link} from "react-router-dom";
 import {useSelector,useDispatch} from "react-redux";
 import {setValidToken} from "../../redux/redux-slices/userSlice";
 import Filter from "./Filter"
 import {setSubject} from "../../redux/redux-slices/filterSlice";
-
+import LocalLibraryIcon from '@material-ui/icons/LocalLibrary';
 
 const useStyles = makeStyles((theme) => ({
   grow: {
@@ -29,12 +27,7 @@ const useStyles = makeStyles((theme) => ({
   menuButton: {
     marginRight: theme.spacing(2),
   },
-  title: {
-    // display: 'none',
-    // [theme.breakpoints.up('sm')]: {
-    //   display: 'block',
-    // },
-  },
+
   search: {
     position: 'relative',
     borderRadius: theme.shape.borderRadius,
@@ -99,6 +92,10 @@ const useStyles = makeStyles((theme) => ({
   avatar:{
     height:"50px",
     width:"50px"
+  },
+  navbarIcons:{
+    width:35,
+    height:35
   }
  
 }));
@@ -111,6 +108,7 @@ export default function PrimarySearchAppBar() {
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
   const isUserLoggedIn=useSelector(state=>state.user.validToken);
+  const role=useSelector(state=>state.user.user.role);
   
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
@@ -180,23 +178,26 @@ export default function PrimarySearchAppBar() {
      { isUserLoggedIn&&<MenuItem>
         <IconButton aria-label="show 4 new mails" color="inherit">
           <Link to='/messenger' className={classes.links}>
-            <Badge badgeContent={4} color="secondary">
-              <MailIcon />
-            </Badge>
+            {/* <Badge badgeContent={4} color="secondary">
+             
+            </Badge> */}
+             <MailIcon className={classes.navbarIcons}/>
           </Link>
         </IconButton>
         <p>Messages</p>
       </MenuItem>
     }
-      {isUserLoggedIn && <MenuItem>
-        <IconButton aria-label="show 11 new notifications" color="inherit">
-          <Badge badgeContent={11} color="secondary">
-            <NotificationsIcon />
-          </Badge>
-        </IconButton>
-        <p>Notifications</p>
-      </MenuItem>
-      }
+    {isUserLoggedIn && role==="teacher" &&
+          <>
+            <IconButton aria-label="show 4 new mails" color="inherit">
+            <Link to='/post' className={classes.iconLinks}>
+              {/* <Badge badgeContent={4} color="secondary">
+              </Badge> */}
+              <LocalLibraryIcon  className={classes.navbarIcons} />
+            </Link>
+            </IconButton>       
+        </>
+        }
       <MenuItem onClick={handleProfileMenuOpen}>
         <IconButton
           aria-label="account of current user"
@@ -256,17 +257,22 @@ export default function PrimarySearchAppBar() {
               <>
                 <IconButton aria-label="show 4 new mails" color="inherit">
                 <Link to='/messenger' className={classes.iconLinks}>
-                  <Badge badgeContent={4} color="secondary">
-                    <MailIcon  />
-                  </Badge>
+                  {/* <Badge badgeContent={4} color="secondary">
+                  </Badge> */}
+                  <MailIcon  className={classes.navbarIcons} />
                 </Link>
-                </IconButton>
-                <IconButton aria-label="show 17 new notifications" color="inherit">
-                  <Badge badgeContent={17} color="secondary">
-                    <NotificationsIcon  />
-                  </Badge>
-                </IconButton>
-                
+                </IconButton>       
+            </>
+            }
+             {isUserLoggedIn && role==="teacher" &&
+              <>
+                <IconButton aria-label="show 4 new mails" color="inherit">
+                <Link to='/post' className={classes.iconLinks}>
+                  {/* <Badge badgeContent={4} color="secondary">
+                  </Badge> */}
+                  <LocalLibraryIcon  className={classes.navbarIcons} />
+                </Link>
+                </IconButton>       
             </>
             }
             <IconButton

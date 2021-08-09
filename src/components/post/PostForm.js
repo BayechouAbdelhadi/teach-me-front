@@ -1,10 +1,8 @@
-import React,{useState}from 'react';
+import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import TextField from '@material-ui/core/TextField'
 // import TextField from './CustomInput'
-import Button from '@material-ui/core/Button'
 import TextareaAutosize from '@material-ui/core/TextareaAutosize';
 import Icon from "@material-ui/core/Icon";
 
@@ -16,7 +14,6 @@ const useStyles = makeStyles((theme) => ({
     width:"50%",
     margin:"0 auto",
     marginBottom:'10px',
-    backgroundColor:"#242526",
     padding:"10px",
     borderRadius:"10px"
   },
@@ -34,10 +31,7 @@ const useStyles = makeStyles((theme) => ({
       padding:"10px",
       paddingLeft:40,
       border:"1px solid #898c8e",
-      backgroundColor:"#3a3b3c",
-      border:"none",
-      color:"white",
-      borderRadius:"60px"
+ 
   },
   publishButton:{
       margin:"0 auto",
@@ -52,10 +46,16 @@ const useStyles = makeStyles((theme) => ({
   },
   customLabel:{
     color:"gray"
+  },
+  postFormInput:{
+    width:"100%",
+  },
+  gridElement:{
+    marginBottom:"20px"
   }
 }));
  
-export default function AutoGrid({post,setPost}) {
+export default function PostForm({post,setPost}) {
   const classes = useStyles();
   
   const onInputChange=(e)=>{
@@ -66,7 +66,7 @@ export default function AutoGrid({post,setPost}) {
     <div className={classes.root}>
         <div className={classes.postHeader}><h3>Publier un offre</h3></div>
       <form >
-        <Grid container spacing={3}>
+        <Grid container spacing={3} className={classes.gridElement}>
             <Grid item xs>
                 <TextField
                 id="subject-input"
@@ -75,6 +75,7 @@ export default function AutoGrid({post,setPost}) {
                 name="subject"
                 value={post.subject}
                 onChange={onInputChange}
+                className={classes.postFormInput}
                 />
             </Grid>
             <Grid item xs>
@@ -85,10 +86,11 @@ export default function AutoGrid({post,setPost}) {
                 name="price"
                 value={post.price}
                 onChange={onInputChange}
+                className={classes.postFormInput}
                 />
             </Grid>
         </Grid>
-        <Grid container spacing={3}>
+        <Grid container spacing={3} className={classes.gridElement}>
             <Grid item xs>
                 <TextField
                 id="duration-input"
@@ -97,6 +99,7 @@ export default function AutoGrid({post,setPost}) {
                 name="duration"
                 value={post.duration}
                 onChange={onInputChange}
+                className={classes.postFormInput}
                 />
             </Grid>
             <Grid item xs>
@@ -108,13 +111,14 @@ export default function AutoGrid({post,setPost}) {
                 keyboardIcon={<Icon className="fa fa-plus" />}
                 value={post.start_date}
                 onChange={onInputChange}
+                className={classes.postFormInput}
                 />
             </Grid>
         </Grid>
-        <Grid container  spacing={3}>
+        <Grid container  spacing={3} >
             <Grid item  xs >
                     <TextareaAutosize  
-                        aria-label="empty textarea" 
+                        aria-label="description" 
                         placeholder="Description"
                         name="description"
                         onChange={onInputChange}

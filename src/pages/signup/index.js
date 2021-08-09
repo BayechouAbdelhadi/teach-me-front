@@ -2,10 +2,8 @@ import React ,{useState,useEffect} from 'react';
 import axios from "axios"
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
-import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
-import Container from '@material-ui/core/Container';
 import { makeStyles } from '@material-ui/core/styles';
 import {useHistory} from 'react-router'
 import InputLabel from '@material-ui/core/InputLabel';
@@ -16,9 +14,8 @@ import Checkbox from '@material-ui/core/Checkbox';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
 import Select from '@material-ui/core/Select';
 import Grid from '@material-ui/core/Grid';
-import {useMap} from 'react-leaflet';
+import {useMap,MapContainer} from 'react-leaflet';
 import  { URL } from '../../middelwares';
-import {MapContainer} from "react-leaflet"
 
 const useStyles = makeStyles((theme) => ({
     paper: {
@@ -134,6 +131,7 @@ export default function SignUp() {
     useEffect(()=>{
         
     },[errors])
+    
     const Location=()=>{
       const map=useMap();
       map.locate().on("locationfound",
@@ -228,7 +226,7 @@ export default function SignUp() {
                   label="me localiser"
               />
               {
-                userChoosedToLocate && <MapContainer style={{display:'none'}}><Location/></MapContainer>
+                userChoosedToLocate && <MapContainer ><Location/></MapContainer>
               }
             </Grid>
             <Grid item xs>

@@ -25,7 +25,7 @@ import {useSelector} from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    width:"50vw",
+    width:"30vw",
     margin:"0 auto",
     backgroundColor:"#242526",
     color:"white",
@@ -52,7 +52,6 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(2),
     textAlign: 'center',
     minWidth:"20vw",
-    color: theme.palette.text.secondary,
     border:"1px solid #898c8e",
     backgroundColor:"#3a3b3c",
     color:"white"
