@@ -86,6 +86,7 @@ export default function RecipeReviewCard({post}) {
   };
  
   const sendMessage=async()=>{
+    console.log('postcarde headers',headers)
     await axios.get(`${URL}conversations/${post.userId}/${user.id}`,headers)
     .then(async (response)=>{
         var convId=null;

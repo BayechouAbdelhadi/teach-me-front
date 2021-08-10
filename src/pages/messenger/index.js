@@ -1,5 +1,7 @@
 import Conversation from "../../components/conversations/Conversation.js";
 import Message from "../../components/message/Message.js";
+import Typography from '@material-ui/core/Typography';
+
 // import ChatOnline from "../../components/chatOnline/ChatOnline";
 import {  useEffect, useRef, useState } from "react";
 import {useSelector} from "react-redux";
@@ -16,13 +18,14 @@ export default function Messenger() {
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
   const [arrivalMessage, setArrivalMessage] = useState(null);
+  const [friendName,setFriendName] = useState("")
   const [onlineUsers, setOnlineUsers] = useState([]);
   const socket = useRef();
   const  user  = useSelector(state => state.user.user);
   const scrollRef = useRef();
 
   useEffect(() => {
-    socket.current = io("ws://localhost:8900");
+    socket.current = io("ws://localhost:8080");
     socket.current.on("getMessage", (data) => {
       setArrivalMessage({
         sender: data.senderId,
@@ -106,7 +109,7 @@ export default function Messenger() {
             <h4 style={{color:"white",textAlign:"center"}}>vos conversations</h4>
             {conversations.map((c) => (
               <div onClick={() => setCurrentChat(c)}>
-                <Conversation conversation={c} currentUser={user} />
+                <Conversation conversation={c} currentUser={user}  setFriendName={setFriendName}/>
               </div>
             ))}
           </div>
@@ -115,6 +118,9 @@ export default function Messenger() {
           <div className="chatBoxWrapper">
             {currentChat ? (
               <>
+                <div style={{textAlign:"center"}}>
+                 <Typography variant="h6" gutterBottom >{friendName}</Typography> 
+                </div>
                 <div className="chatBoxTop">
                   {messages.map((m) => (
                     <div ref={scrollRef}>
@@ -136,7 +142,7 @@ export default function Messenger() {
               </>
             ) : (
               <span className="noConversationText">
-                ouvrez une conversation pour commencer un chat .
+                ouvrez une conversation pour discutter .
               </span>
             )}
           </div>

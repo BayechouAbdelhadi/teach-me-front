@@ -16,15 +16,14 @@ const useStyles=makeStyles((theme) => ({
 })
 );
 
-export default function Conversation({ conversation, currentUser }) {
+export default function Conversation({ conversation, currentUser,setFriendName}) {
   const classes=useStyles();
   const [friend, setFriend] = useState(null);
   useEffect(() => {
-    console.log(`currentUser.id`, currentUser.id)
+
     const friendId = conversation.members.find((m) => m !== currentUser.id);
 
     const getFiend = async () => {
-      console.log(`friendId`, friendId)
       try {
         const res = await axios.get(URL+"users/" + friendId,headers);
         setFriend(res.data);
@@ -36,9 +35,10 @@ export default function Conversation({ conversation, currentUser }) {
   }, [currentUser, conversation]);
 
   return (
-    <div className="conversation">
+    <div className="conversation" onClick={()=>{setFriendName(friend.nom+" "+friend.prenom);
+  }}>
       <Avatar src={"https://bit.ly/3ihXEvW"} className={classes.avatar}/>
-      <span className="conversationName">{friend?.username}</span>
+      <span className="conversationName">{`${friend?.nom} ${friend?.prenom}`}</span>
     </div>
   );
 }
