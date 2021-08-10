@@ -35,15 +35,12 @@ const useStyles = makeStyles((theme) => ({
       margin: "15px auto",
       width: theme.spacing(7),
       height: theme.spacing(7),
-      boxShadow:"inset 0 -3em 3em #ada6a6, 0 0  0 2px rgb(255,255,255), 0.3em 0.3em 1em #ada6a6"
-    },
-    form: {
-      
-  
+      background: "linear-gradient(0.25turn,#1e9638,#195b17)",
     },
     submit: {
-      backgroundColor:'#4cdd2c' ,
-      width:"50%"
+      background: "linear-gradient(0.25turn,#1e9638,#195b17)",
+      width:"50%",
+      marginTop:"20px"
     },
     disable: {
       backgroundColor:"#04295D",
@@ -71,14 +68,8 @@ const useStyles = makeStyles((theme) => ({
         backgroundColor: "#00FF00",
       },
     main:{
-      height :"84vh" ,
-      flexGrow: 1,
-      width:"50%",
-      margin:"0 auto",
-      marginBottom:'10px',
-      padding:"10px",
-      borderRadius:"10px"
-     
+      height :"86vh" ,
+    
     },
     roleSelect:{
       width:"100%",
@@ -94,6 +85,21 @@ const useStyles = makeStyles((theme) => ({
       color:"green",
       width: 40,
       height: 40
+    },
+    signInDescription:{
+      height :"100%",
+    },
+    signInImage:{
+      width: "100%",
+      height: "100%",
+      objectFit: "cover"
+    },
+    SignUpForm:{
+      padding:20
+    },
+    form:{
+      width:"80%",
+      margin:"0 auto"
     }
   }));
 
@@ -142,14 +148,15 @@ export default function SignUp() {
       )
     }
     return (
-        <div className={classes.main}>
-        <div className={classes.heading}>
+        <Grid container className={classes.main}>
+          <Grid item xs className={classes.SignUpForm}>
+          <div className={classes.heading}>
           <Avatar className={classes.avatar} src=""/>
           <Typography component="h1" variant="h5">
               Connection
           </Typography>
         </div>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} className={classes.form}>
           <Grid container spacing={3}>
             <Grid item xs>
               <TextField
@@ -165,7 +172,7 @@ export default function SignUp() {
               onChange={HnadleInputChange}
             />
             </Grid>
-            <Grid item xs>
+            <Grid item   xs>
               <TextField
               
               margin="normal"
@@ -180,7 +187,7 @@ export default function SignUp() {
             </Grid>
           </Grid>
           <Grid container spacing={3}>
-            <Grid item xs>
+            <Grid item  xs>
                 <TextField
                 
                 margin="normal"
@@ -195,7 +202,7 @@ export default function SignUp() {
               />
               {errors && <div> {errors}</div>}
             </Grid>
-            <Grid item xs>
+            <Grid item  xs>
               <TextField
               
               margin="normal"
@@ -211,7 +218,7 @@ export default function SignUp() {
             </Grid>
           </Grid>
           <Grid container spacing={3}>
-            <Grid item xs>
+            <Grid item  xs>
               <FormControlLabel
                   control={<Checkbox  
                               checkedIcon={
@@ -229,7 +236,7 @@ export default function SignUp() {
                 userChoosedToLocate && <MapContainer ><Location/></MapContainer>
               }
             </Grid>
-            <Grid item xs>
+            <Grid item  xs>
             <FormControl className={classes.roleSelect}>
                 <InputLabel id="role-select-label">Role</InputLabel>
                 <Select
@@ -264,6 +271,11 @@ export default function SignUp() {
             </Grid>
           </Grid>
         </form>
-    </div>
+          </Grid>
+          <Grid item xs className={classes.signInDescription}>
+              <img src={'/sign-in-image.jpg'} className={classes.signInImage}></img>
+          </Grid>
+        
+      </Grid>
     )
 }

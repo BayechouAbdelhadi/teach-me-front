@@ -13,6 +13,7 @@ import {useDispatch} from "react-redux";
 import jwtDecode from "jwt-decode";
 import MakePost from "./pages/post"
 import PostDetails from "./pages/post/PostDetails"
+import "react-responsive-carousel/lib/styles/carousel.min.css";
 
 function App() {
 
@@ -22,7 +23,8 @@ function App() {
       const user=jwtDecode(token);
       dispatch(setUser(user));
       dispatch(setValidToken(true));
-    }   
+    } 
+    
   return (
     <Router>
       <Navbar/>
