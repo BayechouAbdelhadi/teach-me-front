@@ -16,7 +16,7 @@ const useStyles=makeStyles((theme) => ({
 })
 );
 
-export default function Conversation({ conversation, currentUser,setFriendName}) {
+export default function Conversation({ conversation, currentUser,setFriendName,active}) {
   const classes=useStyles();
   const [friend, setFriend] = useState(null);
   useEffect(() => {
@@ -35,8 +35,8 @@ export default function Conversation({ conversation, currentUser,setFriendName})
   }, [currentUser, conversation]);
 
   return (
-    <div className="conversation" onClick={()=>{setFriendName(friend.nom+" "+friend.prenom);
-  }}>
+    <div className={active?"conversation activeConversation": "conversation"} onClick={()=>{setFriendName(friend.nom+" "+friend.prenom);
+    }}>
       <Avatar src={"https://bit.ly/3ihXEvW"} className={classes.avatar}/>
       <span className="conversationName">{`${friend?.nom} ${friend?.prenom}`}</span>
     </div>

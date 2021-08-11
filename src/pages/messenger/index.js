@@ -8,7 +8,7 @@ import {useSelector} from "react-redux";
 import axios from "axios";
 import {useLocation} from "react-router-dom"
 import { io } from "socket.io-client";
-import {URL,headers} from "../../middelwares"
+import {URL,WS_URL,headers} from "../../middelwares"
 import "./Messenger.css";
 
 export default function Messenger() {
@@ -25,7 +25,7 @@ export default function Messenger() {
   const scrollRef = useRef();
 
   useEffect(() => {
-    socket.current = io("ws://localhost:8080");
+    socket.current = io(WS_URL);
     socket.current.on("getMessage", (data) => {
       setArrivalMessage({
         sender: data.senderId,
@@ -109,7 +109,7 @@ export default function Messenger() {
             <h4 style={{color:"white",textAlign:"center"}}>vos conversations</h4>
             {conversations.map((c) => (
               <div onClick={() => setCurrentChat(c)} key={c._id}>
-                <Conversation conversation={c} currentUser={user}  setFriendName={setFriendName}/>
+                <Conversation conversation={c} currentUser={user}  setFriendName={setFriendName} active={currentChat && c._id===currentChat._id}/>
               </div>
             ))}
           </div>
